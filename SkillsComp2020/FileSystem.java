@@ -2,6 +2,7 @@
 //Christian Kapsales
 //Purpose: lol idek kid
 //reprompt when there is error
+//replace scanner with buffer functions
 import java.io.*;
 import java.util.*;
 public class FileSystem {
@@ -46,20 +47,35 @@ static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
 			}
 		}
 	}
-		
+		//make first and last name capital first letter
+		  firstName = firstName.toLowerCase();
+		  lastName = lastName.toLowerCase();
+		  firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1);
+		  lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1);
+		  
 		
 		System.out.println("What is your email address? ");
 		String email = sc.nextLine();
 		
 		//check if valid - make into seperate function
+		//check for two consecutive period after @
 	boolean flag2 = true;
 	while (flag2) {
 		int position1 = email.indexOf('@');
 		int position2 = email.lastIndexOf('.');
-		if (position1 != -1 && position2 > position1 && email.lastIndexOf('@') == email.indexOf('@')) {flag2 = false; break;}
-		else {
+		for (int i = position1 + 1; i < email.length(); i++) {
+			if (email.charAt(i) == email.charAt(i-1) && email.charAt(i) == '.') {
+				System.out.println("Email is not valid, please try again: ");
+				email = sc.nextLine();
+				break;
+			}
+		}
+		if (!(position1 != -1 && position2 > position1 && email.lastIndexOf('@') == email.indexOf('@') && email.indexOf('@') != 0)){
 			System.out.println("Email is not valid, please try again: ");
 			email = sc.nextLine();
+		}
+		else {
+			flag2 = false; break;
 		}
 	}
 	
@@ -75,12 +91,61 @@ static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
 		while(flag3) {
 			if(test) {flag3 = false; break;}
 			else {
-				System.out.println("school district not found, please try again: ");
+				System.out.println("School district not found, please try again: ");
 				schoolDistrict = sc.nextLine();
 				test = Arrays.asList(Districts).contains(schoolDistrict);
 			}	
 		}
 		
+		//Birthday
+		//format data into string
+		//if  i have time put months of each day and check accordingly, for now assume 31 days
+		String format;
+		String monthFormat;
+		System.out.println("What year are you born in? ");
+		int year = readInt();
+		while(true) {
+			if (year >=1000 && year <= 9999) break;
+			else {
+				System.out.println("Has to be a valid year of the format - yyyy, please try again: ");
+				year = readInt();
+			}
+		}
+		System.out.println("What month are you born in? ");
+		int month = readInt();
+		while(true) {
+			if (month >= 1 && month <= 12) break;
+			else {
+				System.out.println("Has to be a valid month from 1-12, please try again: ");
+				month = readInt();
+			}
+		}
+		//add zero if 1-9
+		if (month >=1 && month <= 9) {monthFormat =  "0" +  month;}
+		else monthFormat = "" + month;
+		
+		System.out.println("What day of the month are you born in? ");
+		int day = readInt();
+		while(true) {
+			if (day >= 1 && day <= 31) break;
+			else {
+				System.out.println("Has to be a valid day from 1-31, please try again: ");
+				day = readInt();
+			}
+		}
+		format = day + "/" + monthFormat + "/" + year;
+		//assume any competition and ask in slack
+		System.out.println("What competition are you competing in? ");
+		String competition = readLine();
+		System.out.println("What is the score you recieved? ");
+		double score = readDouble();
+		while(true) {
+			if (score >=0 && score <= 100) break;
+			else {
+				System.out.println("The score has to inbetween 0 and 100 inclusively");
+				score = readDouble();
+			}
+		}
 		
 		out.close();
 	}
