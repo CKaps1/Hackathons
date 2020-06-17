@@ -1,4 +1,4 @@
-Welcome to Christian's integrated storage file system!
+Welcome to Christian's integrated storage file system! This file system was created to store data of multiple contestants enrolled in different contests. 
 
 This file system can: 
 
