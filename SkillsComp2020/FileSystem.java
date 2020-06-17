@@ -191,15 +191,13 @@ public class FileSystem {
 		int ID;
 		int rand = seed.nextInt(10000000); // random value from 1 - (10000000 - 1)
 		while (true) {
-			if (rand >= 1000000) {
-				if (map.containsKey(rand)) {
-					rand = seed.nextInt(10000000);
-				}
-				else {
-					map.put(rand, 1);
-					ID = rand;
-					break;
-				}
+			if (rand < 1000000 || map.containsKey(rand)) {
+				rand = seed.nextInt(10000000);
+			}
+			else {
+				map.put(rand, 1);
+				ID = rand;
+				break;
 			}
 		}
 		System.out.println("Your assigned ID is " + ID);
