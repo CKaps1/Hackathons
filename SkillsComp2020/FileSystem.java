@@ -63,19 +63,10 @@ static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
 	while (flag2) {
 		int position1 = email.indexOf('@');
 		int position2 = email.lastIndexOf('.');
-		for (int i = position1 + 1; i < email.length(); i++) {
-			if (email.charAt(i) == email.charAt(i-1) && email.charAt(i) == '.') {
-				System.out.println("Email is not valid, please try again: ");
-				email = sc.nextLine();
-				break;
-			}
-		}
-		if (!(position1 != -1 && position2 > position1 && email.lastIndexOf('@') == email.indexOf('@') && email.indexOf('@') != 0)){
+		if (position1 != -1 && position2 > position1 && email.lastIndexOf('@') == email.indexOf('@') && email.indexOf('@') != 0) {flag2 = false; break;}
+		else {
 			System.out.println("Email is not valid, please try again: ");
 			email = sc.nextLine();
-		}
-		else {
-			flag2 = false; break;
 		}
 	}
 	
@@ -91,7 +82,7 @@ static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
 		while(flag3) {
 			if(test) {flag3 = false; break;}
 			else {
-				System.out.println("School district not found, please try again: ");
+				System.out.println("school district not found, please try again: ");
 				schoolDistrict = sc.nextLine();
 				test = Arrays.asList(Districts).contains(schoolDistrict);
 			}	
