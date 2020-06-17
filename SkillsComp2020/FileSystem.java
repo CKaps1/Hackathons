@@ -262,18 +262,25 @@ static void removeContestant() throws IOException {
 	String line = reader.readLine();
     while (line != null) {
     	if (line == match ) {
-    		List<String> lines = Files.readAllLines(fileSystem.toPath());
-    		lines.set(line, dataType.toUpperCase() + ":" + newData);
-    		Files.write(fileSystem.toPath(), lines);
+//    		List<String> lines = Files.readAllLines(fileSystem.toPath());
+//    		lines.set(line, dataType.toUpperCase() + ":" + newData);
+//    		Files.write(fileSystem.toPath(), lines);
     	}
         line = reader.readLine();
     }
+    System.out.println("Your contestant does not exist");
 }
-
-static void searchContestant() {
-	
-	
-	
+static void searchContestant() throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader("fileSystem.txt"));
+    String find = readLine();
+    String line = reader.readLine();
+    while (line != null) {
+        if (line == find) {
+            break;
+        }
+        line = reader.readLine();
+    }
+    System.out.println("Your contestant doesn't exist");
 }
 static void displayContestants() throws IOException {
 	Scanner in = new Scanner(System.in);
@@ -288,13 +295,12 @@ static void displayContestants() throws IOException {
         name += " " + line;
         line = reader.readLine();
         line = reader.readLine();
-        name += " " + line;
+        System.out.println(name);
         line = reader.readLine();
         line = reader.readLine();
         if (line == comp) {
             line = reader.readLine(); // score
             score = Integer.parseInt(line);
-            
         }
         else {
             line = reader.readLine(); // score
@@ -341,7 +347,7 @@ static void displayTop() throws IOException {
     }
 }
 
-static void help() throws InterruptedException {
+static void help() throws InterruptedException, IOException {
 	//create help manual
 	//format nicely
 	// TODO: run help function at the beginning of program - and have the option to call it using a given input from user
@@ -355,7 +361,7 @@ static void help() throws InterruptedException {
 	Thread.sleep(500);
 	System.out.println("To search for a contestant, enter 3");
 	Thread.sleep(500);
-	System.out.println("To display the contestants in chronological order, enter 4");
+	System.out.println("To display the contestants in order, enter 4");
 	Thread.sleep(500);
 	System.out.println("To display the top 3 contestants, enter 5");
 	Thread.sleep(500);
@@ -370,11 +376,21 @@ static void help() throws InterruptedException {
 		e.printStackTrace();
 	}
 	if (option == 9) {return;}
-	if (option == 1) {System.out.println("To add a contestant to the database, you must input the given ");}
-	if (option == 2) {System.out.println();}
-	if (option == 3) {System.out.println();}
-	if (option == 4) {System.out.println();}
-	if (option == 5) {System.out.println();}
+	if (option == 1) {System.out.println("To add a contestant to the database, you must input the following queries. If you want to add a contestant enter 1 again: "); int option2 = readInt();
+		if (option2 == 1) addContestant();
+	}
+	if (option == 2) {System.out.println("To remove a contestant from the database, you must first give ID or last name of the contestant. If you want to remove a contestant, enter 2 again: ");  int option2 = readInt();
+		if (option2 == 2) removeContestant();
+	}
+	if (option == 3) {System.out.println("To search for a contestant , enter their last name, birthdate or school district. If you want to search for a contestant, enter 3 again: ");  int option2 = readInt();
+		if (option2 == 3) searchContestant();
+	}
+	if (option == 4) {System.out.println("This option will display the contestants by order of their last name. If you want to display the contestants in order of surname, enter 4: ");  int option2 = readInt();
+	if (option2 == 4) displayContestants();
+	}
+	if (option == 5) {System.out.println("This displays the top 3 contestants for a given contest based on score. If you want to display the top 3 contestants for a given contest, enter 5: ");  int option2 = readInt();
+	if (option2 == 5) displayTop();
+	}
 	if (option == 0) {System.out.println();}
 	}
 }
